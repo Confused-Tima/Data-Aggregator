@@ -10,9 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 from datetime import timedelta
 
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,8 +46,11 @@ INSTALLED_APPS = [
     # Third party
     "rest_framework",
     "rest_framework_simplejwt",
+    "django.contrib.postgres",
+    "psqlextra",
     # User defined
     "users",
+    "data_processor",
 ]
 
 MIDDLEWARE = [
@@ -82,8 +89,12 @@ WSGI_APPLICATION = "data_aggregator.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "psqlextra.backend",
+        "NAME": os.getenv("PG_DB"),
+        "USER": os.getenv("PG_USER"),
+        "PASSWORD": os.getenv("PG_PASS"),
+        "HOST": os.getenv("PG_HOST"),
+        "PORT": os.getenv("PG_PORT"),
     }
 }
 
