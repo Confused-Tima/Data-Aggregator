@@ -48,8 +48,9 @@ customer_ordered_items_per_category as (
     customer_id,
     customer_name,
     category
-)
-select
+),
+grouped_data as (
+  select
   distinct on (customer_id) customer_id,
   customer_name,
   total_spent as category_spent,
@@ -59,7 +60,11 @@ from
   customer_ordered_items_per_category
 order by
   customer_id,
-  category_spent desc --limit 5;
+  category_spent desc
+)
+select * from grouped_data limit 5;
+
+  --limit 5;
   --select distinct on (customer_id) *
   --from customer_ordered_items_per_category
   --order by customer_id, total_spent desc
