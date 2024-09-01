@@ -8,7 +8,7 @@ from . import views
 
 
 urlpatterns = [
-    path("signup/", views.signup, "signup"),
+    path("signup/", views.signup, name="signup"),
     # JWT Tokens
     path("login/", TokenObtainPairView.as_view(), name="login"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
