@@ -61,6 +61,8 @@ You can find them with the link or just find the .sql files in the root of the f
 
 ## Django Project
 
+##### Note: If someone wants to try building the project, then use `pip install poetry`, then install requirements using `poetry install`
+
 Actually there is alot to talk about but it's sunday night and almost 12, so I would like to wrap it up faster.
 
 I have used postgresql database. Specifically because of this constraint:
@@ -74,4 +76,37 @@ I wanted to use sqlalchemy and probably in actual scenario I would pick that one
 
 That had a very big and simple flaw. I would like to give you some time to think as to what could it be??
 
+So the basic flaw is of extra processing. Why spend extra efforts of looping over data and removing it??
 
+But this is was still not as big of an issue until the csv file was more than 10 lakhs in rows.
+
+**The bigger issue was suppose I first tried checking IDs in the database and at that time they didn't exist. But after that step when I tried inserting the data, at that time some other process or maybe some other app or maybe someone manually entered the data in the database. Then that would fail our entire insertion query.**
+
+So I used postgres Conflict clause which is more like an error handler.
+
+For this specific use case I installed another library psql extras (can be found in [requirements file](pyproject.toml)).
+
+And I also had to change the default sql-engine for django.
+
+There are lots to discuss but let wrap it up.
+
+You can go to: [routes/views](data_processor/views.py) for main business logic of the csv accepting and serving the response.
+
+There are 2 different endpoints for inserting and reading data.
+
+Insertion takes csv and reads the data from it and updates the db after validating every field.
+It multiple steps to do so.
+
+Reading is although not very optimised, which I do accept. Instead of using a single query to fetch the data. It is actually using 2 queries to do so. And then also using loops to make a result. But after working 7 days continously this is best I can do right now. If I had more time then I would have improved.
+
+
+Authentication is also there in place. 
+
+Though I'm not using generic authentication, where get(read) requests are available for all users and whereas post requests are only available for authenticated users.
+
+There could have been lot more regarding authentication roles and all. But as per requirements it is still complete.
+
+It also has refresh token, access token and singup page for additional security.
+
+# Thank you
+That's it from my side. Hope you like the projects.
