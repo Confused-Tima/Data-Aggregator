@@ -22,7 +22,9 @@ If you have any doubts or any things related to it. You can use the above links.
 
 ## 1st Assessment: The Query
 
-You can find the [Answer here](Query.sql)
+You can find the:
+- [First Answer here](UserCategorySpent.sql)
+- [Second Answer here](UserTotalSpentQuery.sql)
 
 I have tried dividing the queried in much smaller subqueries. And then combined them up to fetch the result out of it.
 
@@ -53,4 +55,23 @@ This sub-query groups the data based on categories. And these categories were pr
 
 Now here I was a bit confused. I didn't know whether `total_spent` was refering to the total spent in the most spent category or to the user's total spent. So I did both. First part of very easy. But for the second one I struggled a bit which wasted a lot of my time.
 
-Currently it contains, 
+So I have added them both in separated files.
+You can find them with the link or just find the .sql files in the root of the folder.
+
+
+## Django Project
+
+Actually there is alot to talk about but it's sunday night and almost 12, so I would like to wrap it up faster.
+
+I have used postgresql database. Specifically because of this constraint:
+- `Create a table to store the product data if it does not already exist.`
+
+So if data exists then I have to make sure that it do not get entered again or generate some error.
+
+I wanted to use `on conflict` clause of postgres, but unfortunately that was not present in django ORM.
+
+I wanted to use sqlalchemy and probably in actual scenario I would pick that one up for it's flexibilty but if I had picked that one here then I would have passed the deadline. So earlier I was just making sure that primary keys are not present in the database tables. And inserting after that only.
+
+That had a very big and simple flaw. I would like to give you some time to think as to what could it be??
+
+

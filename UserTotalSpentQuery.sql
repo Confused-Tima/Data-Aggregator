@@ -63,9 +63,3 @@ order by
   category_spent desc
 )
 select * from grouped_data limit 5;
-
-  --limit 5;
-  --select distinct on (customer_id) *
-  --from customer_ordered_items_per_category
-  --order by customer_id, total_spent desc
-  --limit 5;
